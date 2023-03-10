@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const createError = require("http-errors");
 const ImageModel = require("../../models/image.model");
+const Upload = require("../../utils/drive");
 
 const ImageController = {};
 
@@ -19,6 +20,29 @@ ImageController.getImage = async (req, res, next) => {
         return res.status(200).json({ status: "success", data: image });
     } catch (error) {
         // logger.error(error.stack || error);
+        return res.status(500);
+    }
+};
+ImageController.deleteImage = async (req, res, next) => {
+    try {
+        const _id = mongoose.Types.ObjectId(req.params.id);
+        const image = await ImageModel.findById({ _id }).populate('fanpage');
+        const imageLatest = await ImageModel.findOne({ fanpage: image.fanpage._id, status: "latest" }).sort({ 'createdAt': 'desc' });
+        if (imageLatest._id != _id) {
+            const driveFileId = image.source[image.source.findIndex(e => e.type === 'drive')].id;
+            const deleteDrive = Upload.deleteFile(driveFileId)
+            if (deleteDrive) {
+                await ImageModel.findOneAndDelete({ _id });
+                return res.status(200).json({ status: "success" });
+            } else {
+                return res.status(200).json({ status: "failed", message: "Has error" });
+            }
+        } else {
+            return res.status(200).json({ status: "failed", message: "this image is flag" });
+        }
+    } catch (error) {
+        // logger.error(error.stack || error);
+        console.log(error)
         return res.status(500);
     }
 };

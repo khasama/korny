@@ -37,8 +37,8 @@ ToolController.getImagesOfFanpage = async (req, res, next) => {
             rs.arrData.forEach(ele => {
                 arrImage.push(ele);
             });
-            // console.log({ next });
             console.log(arrImage.length);
+            if (arrImage.length >= 2000) next = false;
         }
         for (const image of arrImage) {
             const rs = await fetch(image.source, { method: "GET", });
@@ -76,8 +76,8 @@ ToolController.getImagesOfFanpage = async (req, res, next) => {
                 console.log(`error: ${getError}`);
             }
         }
-        await ImageModel.findOneAndUpdate({ postId: arrImage[0].postId }, { status: 'latest' });
-        await FanpageModel.findOneAndUpdate({ _id }, { numberImages: parseInt(fanpage.numberImages + getSuccess) })
+        // await ImageModel.findOneAndUpdate({ postId: arrImage[0].postId }, { status: 'latest' });
+        // await FanpageModel.findOneAndUpdate({ _id }, { numberImages: parseInt(fanpage.numberImages + getSuccess) });
         return res.status(200).json({ status: "success", message: `get thành công ${getSuccess} ảnh, ${getError} ảnh lỗi` });
     } catch (error) {
         // next(createError[500]);

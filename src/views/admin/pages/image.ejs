@@ -42,6 +42,7 @@
                                                     <th>Width</th>
                                                     <th>Heigth</th>
                                                     <th>Image</th>
+                                                    <th>Latest</th>
                                                     <th style="width: 25%;">
                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="">
                                                             New
@@ -49,7 +50,7 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="tbodyImage">
                                                 <% images.forEach(image=> { %>
                                                     <tr id="<%- image._id %>">
                                                         <td>
@@ -62,12 +63,20 @@
                                                             <%- image.height %>
                                                         </td>
                                                         <td>
-                                                            <img src="http://localhost:3345/media/image/<%- image._id %>"
-                                                                alt="" width="150">
+                                                            <a href="javascript:void(0)"
+                                                                data-uri="<%- domain %>media/image/<%- image._id %>"
+                                                                onclick="zoomImage(this)">
+                                                                <img src="<%- domain %>media/image/<%- image._id %>"
+                                                                    alt="" width="150">
+                                                            </a>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)" class="btn btn-danger"
-                                                                data-id="<%- image._id %>" onclick="">Delete</a>
+                                                            <%- image.stauts=='latest' ? 'true' : 'false' %>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-delete"
+                                                                data-id="<%- image._id %>"
+                                                                onclick="deleteImage(this)">Delete</button>
                                                         </td>
                                                     </tr>
                                                     <% }); %>
@@ -77,92 +86,15 @@
                                 </div>
                             </div>
 
-                            <div class="modal fade" id="newMovieModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog" style="max-width: 40%;">
+                            <div class="modal fade" id="zoomImage" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" style="max-width: 30%;">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">NEW MOVIE</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="name">Name:</label>
-                                                <input type="text" class="form-control" id="addName" autocomplete="off">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="oname">AKA:</label>
-                                                <input type="text" class="form-control" id="addAka" autocomplete="off">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Thumbnail">Thumbnail:</label>
-                                                <input type="file" class="form-control" id="addThumb" accept="image/*">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Background">Background:</label>
-                                                <input type="file" class="form-control" id="addBackground"
-                                                    accept="image/*">
-                                            </div>
-                                            <input type="hidden" id="type" value="anime">
-                                            <button id="newMovie" class="btn btn-primary">Create</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal fade" id="updateMovieModal" tabindex="-1" role="dialog"
-                                aria-hidden="true">
-                                <div class="modal-dialog" style="max-width: 40%;">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">UPDATE MOVIE</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                <div class="form-group">
-                                                    <label for="name">Name:</label>
-                                                    <input type="text" class="form-control" id="updateName"
-                                                        autocomplete="off">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Slug">Slug:</label>
-                                                    <input type="text" class="form-control" id="updateSlug" disabled>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="oname">AKA:</label>
-                                                    <input type="text" class="form-control" id="updateAka"
-                                                        autocomplete="off">
-                                                </div>
-                                                <div class="form-group d-flex">
-                                                    <label for="category" style="line-height: 30px;">Status:</label>
-                                                    <select id="updateStatus" class="w-50 form-control ml-2">
-                                                        <option value="Hoàn thành"> Hoàn thành </option>
-                                                        <option value="Đang tiến hành">
-                                                            Đang tiến hành
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Thumbnail">Thumbnail:</label>
-                                                    <input type="file" class="form-control" id="updateThumb"
-                                                        accept="image/*">
-                                                    <img src="" alt="" id="current-thumb" class="mt-2" width="200">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Background">Background:</label>
-                                                    <input type="file" class="form-control" id="updateBackground"
-                                                        accept="image/*">
-                                                    <img src="" alt="" id="current-background" class="mt-2" width="300">
-                                                </div>
-
-                                                <input type="hidden" id="idMovie">
-                                                <button id="updateMovie" class="btn btn-primary">Save</button>
-                                            </div>
-                                        </div>
+                                        <img src="" id="imgZoom" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -185,6 +117,68 @@
     <!-- End of Page Wrapper -->
 
     <%- include('../partials/bot') %>
+        <script>
+            let nextPage = 2;
+            const limit = 20;
+            window.onscroll = () => {
+                var winScroll =
+                    document.body.scrollTop || document.documentElement.scrollTop;
+                var height =
+                    document.documentElement.scrollHeight -
+                    document.documentElement.clientHeight;
+                var scrolled = parseInt((winScroll / height) * 100);
+                if (scrolled == 100) {
+                    $.ajax({
+                        type: "GET",
+                        url: `<%-domain%>api/v1/images?page=${nextPage}&limit=${limit}`,
+                        success: (rs) => {
+                            if (rs.status == "success") {
+                                const images = rs.data;
+                                nextPage++;
+                                images.forEach((ele) => {
+                                    $("#tbodyImage").append(`
+                                        <tr id="${ele._id}">
+                                            <td>
+                                                ${ele.postId}
+                                            </td>
+                                            <td>
+                                                ${ele.width}
+                                            </td>
+                                            <td>
+                                                ${ele.height}
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)"
+                                                    data-uri="<%- domain %>media/image/${ele._id}"
+                                                    onclick="zoomImage(this)">
+                                                    <img src="<%- domain %>media/image/${ele._id}"
+                                                        alt="" width="150">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                ${ele.stauts == 'latest' ? 'true' : 'false'}
+                                            </td>
+                                            <td>
+                                                <button href="javascript:void(0)" class="btn btn-danger btn-delete"
+                                                    data-id="${ele._id}"
+                                                    onclick="deleteImage(this)">Delete</button>
+                                            </td>
+                                        </tr>
+                                    `);
+                                });
+                            } else {
+                                // $(".load-more").html(
+                                //     "<p class='text-center text-danger'>Đã hết sản phẩm để hiển thị</p>"
+                                // );
+                            }
+                        },
+                        error: (err) => {
+                            console.log(err);
+                        },
+                    });
+                }
+            };
+        </script>
 
 </body>
 

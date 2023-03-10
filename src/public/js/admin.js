@@ -102,6 +102,35 @@ function deleteFanpage(ele) {
         });
     }
 }
+
+function zoomImage(ele) {
+    const uri = $(ele).attr('data-uri');
+    $("#imgZoom").attr("src", uri);
+    $("#zoomImage").modal("show");
+}
+
+function deleteImage(ele) {
+    $(ele).prop('disabled', true);
+    const id = $(ele).attr("data-id");
+    if (confirm("Are you sure about that ???")) {
+        $.ajax({
+            type: "DELETE",
+            url: `${base}/image/${id}`,
+            success: (result) => {
+                if (result.status == "success") {
+                    showAlert("success", `Delete success`);
+                    $(`#${id}`).remove();
+                } else {
+                    $(ele).prop('disabled', false);
+                    showAlert("error", result.message);
+                }
+            }
+        });
+    } else {
+        $(ele).prop('disabled', false);
+    }
+}
+
 function getUser(ele, type) {
     const id = $(ele).attr("data-id");
     $.ajax({

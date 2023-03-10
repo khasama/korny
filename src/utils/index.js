@@ -14,25 +14,27 @@ async function fetchImages(url, id) {
             const data = cvToJson.data;
             const i = data.findIndex(e => e.id == id);
             if (i > -1) {
-                const temp = data.slice(0, -i);
-                temp.forEach(ele => {
-                    arrData.push({
-                        postId: ele.id,
-                        height: ele.height,
-                        width: ele.width,
-                        source: ele.source
-                    });
-                });
-                return { arrData, next: false };
+                for (const ele of data) {
+                    if (ele.id != id) {
+                        arrData.push({
+                            postId: ele.id,
+                            height: ele.height,
+                            width: ele.width,
+                            source: ele.source
+                        });
+                    } else {
+                        return { arrData, next: false };
+                    }
+                }
             } else {
-                data.forEach(ele => {
+                for (const ele of data) {
                     arrData.push({
                         postId: ele.id,
                         height: ele.height,
                         width: ele.width,
                         source: ele.source
                     });
-                });
+                }
                 const next = cvToJson.paging.next || false;
                 return { arrData, next };
             }
