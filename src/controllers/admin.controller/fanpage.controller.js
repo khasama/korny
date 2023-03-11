@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const createError = require("http-errors");
 const FanpageModel = require("../../models/fanpage.model");
+const ImageModel = require("../../models/image.model");
 
 const { getFanpageInformation } = require("../../utils");
 
@@ -54,6 +55,18 @@ FanpageController.deleteFanpage = async (req, res, next) => {
         // const _id = mongoose.Types.ObjectId(req.params.id);
         // await FanpageModel.findOneAndDelete({ _id });
         return res.status(200).json({ status: "success" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500);
+    }
+};
+
+FanpageController.imagesOfFanpage = async (req, res, next) => {
+    try {
+        const _id = mongoose.Types.ObjectId(req.params.id);
+        const fanpage = await FanpageModel.findById({ _id });
+        const images = await ImageModel.find({ fanpage: _id }).sort({ 'createdAt': 'desc' }).limit(20);
+        return res.render("admin/pages/image_of_fanpage", { images, fanpage, domain: global.domain });
     } catch (error) {
         console.log(error);
         return res.status(500);

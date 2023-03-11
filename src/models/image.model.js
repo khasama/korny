@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const mongoose_delete = require('mongoose-delete');
 
 const imageSchema = new Schema(
     {
@@ -29,5 +30,7 @@ const imageSchema = new Schema(
     },
     { timestamps: true }
 );
+
+imageSchema.plugin(mongoose_delete);
 
 module.exports = mongoose.model("images", imageSchema);

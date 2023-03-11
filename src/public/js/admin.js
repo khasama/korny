@@ -119,10 +119,9 @@ function deleteImage(ele) {
             success: (result) => {
                 if (result.status == "success") {
                     showAlert("success", `Delete success`);
-                    $(`#${id}`).remove();
                 } else {
                     $(ele).prop('disabled', false);
-                    showAlert("error", result.message);
+                    showAlert("danger", result.message);
                 }
             }
         });

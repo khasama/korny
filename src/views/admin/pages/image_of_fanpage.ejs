@@ -27,6 +27,10 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid" style="margin-top: 20px;">
 
+                            <div>
+                                <a href="/admin/fanpage" class="btn btn-success">Back</a>
+                            </div>
+
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -35,7 +39,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Post ID</th>
@@ -66,7 +70,8 @@
                                                             <a href="javascript:void(0)"
                                                                 data-uri="<%- domain %>media/image/<%- image._id %>"
                                                                 onclick="zoomImage(this)">
-                                                                <%- domain %>media/image/<%- image._id %>
+                                                                <img src="<%- domain %>media/image/<%- image._id %>"
+                                                                    alt="" width="150">
                                                             </a>
                                                         </td>
                                                         <td>
@@ -116,10 +121,76 @@
             <!-- End of Content Wrapper -->
 
     </div>
-    <div id="alert-area" class="position-absolute" style="top: 20px; right: 20px;"></div>
+    <div id="alert-area" class="position-fixed" style="top: 20px; right: 20px;"></div>
     <!-- End of Page Wrapper -->
 
     <%- include('../partials/bot') %>
+        <script>
+            let nextPage = 2;
+            const limit = 20;
+            window.onscroll = () => {
+                var winScroll =
+                    document.body.scrollTop || document.documentElement.scrollTop;
+                var height =
+                    document.documentElement.scrollHeight -
+                    document.documentElement.clientHeight;
+                var scrolled = parseInt((winScroll / height) * 100);
+                if (scrolled == 100) {
+                    $.ajax({
+                        type: "GET",
+                        url: `<%-domain%>api/v1/images?page=${nextPage}&limit=${limit}&fanpage=<%-fanpage._id%>`,
+                        success: (rs) => {
+                            if (rs.status == "success") {
+                                const images = rs.data;
+                                nextPage++;
+                                images.forEach((ele) => {
+                                    $("#tbodyImage").append(`
+                                    <tr id="${ele._id}">
+                                        <td>
+                                            ${ele.postId}
+                                        </td>
+                                        <td>
+                                            ${ele.width}
+                                        </td>
+                                        <td>
+                                            ${ele.height}
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)"
+                                                data-uri="<%- domain %>media/image/${ele._id}"
+                                                onclick="zoomImage(this)">
+                                                <img src="<%- domain %>media/image/${ele._id}"
+                                                                alt="" width="150">
+                                                
+                                            </a>
+                                        </td>
+                                        <td>
+                                            ${ele.status == 'latest' ? 'true' : 'false'}
+                                        </td>
+                                        <td>
+                                            ${ele.deleted ? `<p class="text-danger">Deleted</p>` :
+                                            `<button href="javascript:void(0)" class="btn btn-danger btn-delete"
+                                                    data-id="${ele._id}"
+                                                    onclick="deleteImage(this)">Delete</button>`
+                                        }
+                                        </td>
+                                    </tr>
+                                `);
+                                });
+                            } else {
+                                // $(".load-more").html(
+                                //     "<p class='text-center text-danger'>Đã hết sản phẩm để hiển thị</p>"
+                                // );
+                            }
+                        },
+                        error: (err) => {
+                            console.log(err);
+                        },
+                    });
+                }
+            };
+        </script>
+
 </body>
 
 </html>

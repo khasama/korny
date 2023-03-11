@@ -3,9 +3,9 @@ const router = express.Router();
 const { ImageController } = require("../../controllers/admin.controller");
 
 
-// router.post("/", ImageController.addImage);
-// router.put("/:id", ImageController.updateImage);
-router.delete("/:id", ImageController.deleteImage);
+router.get("/deleted", ImageController.deletedImages);
 router.get("/", ImageController.imagePage);
+router.delete("/", ImageController.deleteImage);
+router.delete("/:id", ImageController.softDeleteImage);
 
 module.exports = router;
