@@ -33,9 +33,11 @@
 
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
+                                <div class="card-header py-3 d-flex">
                                     <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">Images
                                     </h6>
+                                    <a href="javascript:void(0)" class="btn btn-danger ml-auto"
+                                        onclick="realDeleteAll()">Delete all</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -78,7 +80,7 @@
                                                                 data-id="<%- image._id %>"
                                                                 onclick="realDeleteImage(this)">Delete</button>
                                                             <button class="btn btn-primary" data-id="<%- image._id %>"
-                                                                onclick="">Restore</button>
+                                                                onclick="restoreImage(this)">Restore</button>
                                                         </td>
                                                     </tr>
                                                     <% }); %>
@@ -164,7 +166,7 @@
                                                 onclick="realDeleteImage(this)">Delete</button>
                                             <button class="btn btn-primary"
                                                 data-id="${ele._id}"
-                                                onclick="">Restore</button>
+                                                onclick="restoreImage(this)">Restore</button>
                                         </td>
                                     </tr>
                                 `);

@@ -13,7 +13,7 @@ async function setFilePublic(fileId) {
             }
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 };
 
@@ -39,7 +39,7 @@ Upload.uploadFile = async (file, share, t) => {
         if (share) await setFilePublic(fileId);
         return fileId;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw error;
     }
 };
@@ -51,7 +51,7 @@ Upload.deleteFile = async (fileId) => {
             return true;
         }
     } catch (error) {
-        console.log({ func: "delete drive", status: error.response.status, msg: error.response.statusText });
+        // console.log({ func: "delete drive", status: error.response.status, msg: error.response.statusText });
         throw error;
     }
 };

@@ -44,7 +44,7 @@ async function fetchImages(url, id) {
             return { arrData, next: false };
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 }
 
@@ -69,7 +69,7 @@ module.exports = {
                 return false;
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     },
     fetchImages,

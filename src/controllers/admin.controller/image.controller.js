@@ -19,6 +19,15 @@ ImageController.deletedImages = async (req, res, next) => {
     } catch (error) {
     }
 };
+ImageController.restoreImage = async (req, res, next) => {
+    try {
+        const _id = mongoose.Types.ObjectId(req.params.id);
+        await ImageModel.restore({ _id });
+        return res.status(200).json({ status: 'success' });
+    } catch (error) {
+        return res.status(200).json({ status: 'failed', message: 'has error' });
+    }
+};
 ImageController.getImage = async (req, res, next) => {
     try {
         const _id = mongoose.Types.ObjectId(req.params.id);
@@ -40,7 +49,7 @@ ImageController.softDeleteImage = async (req, res, next) => {
             return res.status(200).json({ status: "failed", message: "this image is flag" });
         }
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(500);
     }
 };
@@ -59,18 +68,23 @@ ImageController.deleteImage = async (req, res, next) => {
                 return res.status(200).json({ status: "failed", message: "Has error" });
             }
         } else {
-            const images = await ImageModel.findDeleted();
+            const images = await ImageModel.find({ deleted: true });
             for (const image of images) {
-                const driveFileId = image.source[image.source.findIndex(e => e.type === 'drive')].id;
-                const deleteDrive = Upload.deleteFile(driveFileId);
-                if (deleteDrive) {
-                    await ImageModel.findByIdAndDelete({ _id: images._id });
+                try {
+                    const driveFileId = image.source[image.source.findIndex(e => e.type === 'drive')].id;
+                    const deleteDrive = Upload.deleteFile(driveFileId);
+                    if (deleteDrive) {
+                        await ImageModel.findByIdAndDelete({ _id: image._id });
+                    }
+                    // console.log(image._id);
+                } catch (error) {
+                    // console.log(error);
                 }
             }
             return res.status(200).json({ status: "success" });
         }
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(500);
     }
 };

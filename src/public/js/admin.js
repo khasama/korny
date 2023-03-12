@@ -130,6 +130,67 @@ function deleteImage(ele) {
     }
 }
 
+function realDeleteImage(ele) {
+    $(ele).prop('disabled', true);
+    const id = $(ele).attr("data-id");
+    if (confirm("Are you sure about that ???")) {
+        $.ajax({
+            type: "DELETE",
+            url: `${base}/image/delete?id=${id}`,
+            success: (result) => {
+                if (result.status == "success") {
+                    showAlert("success", `Delete success`);
+                    $(`#${id}`).remove();
+                } else {
+                    $(ele).prop('disabled', false);
+                    showAlert("danger", result.message);
+                }
+            }
+        });
+    } else {
+        $(ele).prop('disabled', false);
+    }
+}
+function realDeleteAll(ele) {
+    if (confirm("Are you sure about that ???")) {
+        $.ajax({
+            type: "DELETE",
+            url: `${base}/image/delete`,
+            success: (result) => {
+                if (result.status == "success") {
+                    location.reload();
+                } else {
+                    showAlert("danger", result.message);
+                }
+            }
+        });
+    } else {
+        $(ele).prop('disabled', false);
+    }
+}
+
+function restoreImage(ele) {
+    $(ele).prop('disabled', true);
+    const id = $(ele).attr("data-id");
+    if (confirm("Are you sure about that ???")) {
+        $.ajax({
+            type: "PUT",
+            url: `${base}/image/restore/${id}`,
+            success: (result) => {
+                if (result.status == "success") {
+                    showAlert("success", `restore success success`);
+                    $(`#${id}`).remove();
+                } else {
+                    $(ele).prop('disabled', false);
+                    showAlert("danger", result.message);
+                }
+            }
+        });
+    } else {
+        $(ele).prop('disabled', false);
+    }
+}
+
 function getUser(ele, type) {
     const id = $(ele).attr("data-id");
     $.ajax({
