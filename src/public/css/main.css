@@ -2,70 +2,138 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-a {
-    color: #000;
-    text-decoration: none;
+body {
+    background-color: rgb(43, 68, 68);
 }
 
-.nav-link {
-    color: #fff !important;
+.header {
+    width: 100%;
+    padding: 10px;
+    height: 60px;
+    background-color: rgb(22, 35, 35);
 }
 
-.nav-link:hover {
-    color: rgba(255, 255, 255, 0.547) !important;
-}
-
-.card {
-    margin: 0.5rem !important;
-}
-
-.prod-name {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 0;
-}
-
-.slick-arrow {
-    display: none !important;
-}
-
-.loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 2s linear infinite;
+.header-content {
+    max-width: 1600px;
     margin: 0 auto;
+    display: flex;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+#login {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-left: auto;
 }
 
-#list-eps .active {
-    background-color: #ad8c39 !important;
+.main {
+    max-width: 1600px;
+    margin: 15px auto;
 }
 
-#list-link .active {
-    background-color: #34353a !important;
+.gallery {
+    display: grid;
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 8px;
 }
 
-.mask {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+.gallery img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 16px #333;
+    transition: all 1.5s ease;
+}
+
+.gallery .content {
+    padding: 4px;
+}
+
+.gallery .gallery-item {
+    transition: grid-row-start 300ms linear;
+    transition: transform 300ms ease;
+    transition: all 0.5s ease;
     cursor: pointer;
+}
+
+.gallery .gallery-item:hover {
+    transform: scale(1.025);
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#modal-content {
+    margin: 3% auto 0 auto;
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+#closeModal {
+    color: #000;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+    color: #0ff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#scrollToTopCtn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: none;
+    padding: 1.2rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border-radius: 10%;
+}
+
+#scrollToTopCtn:hover {
+    color: #0ff;
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
 }

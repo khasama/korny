@@ -5,121 +5,355 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: rgb(43, 68, 68);
+        }
+
+        .header {
+            width: 100%;
+            padding: 10px;
+            height: 60px;
+            background-color: rgb(22, 35, 35);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        #login {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5em;
+            margin-left: auto;
         }
 
         .main {
-            margin: 10px;
+            max-width: 1600px;
+            margin: 15px auto;
         }
 
-        .images-ctn {
-            column-width: 15em;
-            -moz-column-width: 15em;
-            -webkit-column-width: 15em;
-
-            column-gap: 1rem;
-            -moz-column-gap: 1rem;
-            -webkit-column-gap: 1rem;
+        .gallery {
+            display: grid;
+            grid-column-gap: 8px;
+            grid-row-gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 8px;
         }
 
-        .image-wrap {
-            display: inline-block;
+        .gallery img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 16px #333;
+            transition: all 1.5s ease;
+        }
+
+        .gallery .content {
+            padding: 4px;
+        }
+
+        .gallery .gallery-item {
+            transition: grid-row-start 300ms linear;
+            transition: transform 300ms ease;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .gallery .gallery-item:hover {
+            transform: scale(1.025);
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+            }
+        }
+
+        @media (max-width: 400px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
             width: 100%;
-            text-align: center;
-            margin: 0.5rem auto;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        #modal-content {
+            margin: 5% auto;
             position: relative;
-            padding: 6px;
-            border-radius: 2px;
-            transition: 0.3s ease;
-            font-size: 0;
+            /* width: 550px; */
+            animation-name: animatetop;
+            animation-duration: 0.4s
         }
 
-        .image {
-            width: 100%;
-            height: auto;
-            height: auto;
-            display: block;
-            box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);
+        #closeModal {
+            color: #000;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        #closeModal:hover,
+        #closeModal:focus {
+            color: #0ff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #scrollToTopCtn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: none;
+            padding: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            border-radius: 10%;
+        }
+
+        #scrollToTopCtn:hover {
+            color: #0ff;
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <header>Kỏny by khapro</header>
+        <header class="header">
+            <div class="header-content">
+                Kỏny by khapro
+
+                <a href="javascript:void(0)" id="login">Login</a>
+            </div>
+        </header>
         <div class="main">
-            <div class="images-ctn">
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1cf770a15271971242b" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1c3770a15271971241e" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de19d770a1527197123fc" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1f6770a15271971246d" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1ed770a152719712463" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1b4770a152719712410" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de191770a1527197123f4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de15d770a1527197123c6" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd133770a1527197117d4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd11f770a1527197117c2" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd0fc770a1527197117a4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de1b4770a152719712410" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de191770a1527197123f4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640de15d770a1527197123c6" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd133770a1527197117d4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd11f770a1527197117c2" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dd0fc770a1527197117a4" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dda70770a152719711fbf" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dda62770a152719711fb5" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dda3f770a152719711f97" alt="korny" class="image">
-                </a>
-                <a href="javascript:void(0)" class="image-wrap">
-                    <img src="http://localhost:3345/media/image/640dda77770a152719711fc5" alt="korny" class="image">
-                </a>
+            <div class="gallery" id="gallery">
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30ed87c25839fab273c2" data-width="720"
+                        data-height="720">
+                        <img src="http://localhost:3345/media/image/640f30ed87c25839fab273c2" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30ed87c25839fab273c2" data-width="720"
+                        data-height="720">
+                        <img src="http://localhost:3345/media/image/640f30ed87c25839fab273c2" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30eb87c25839fab273c0" data-width="497"
+                        data-height="764">
+                        <img src="http://localhost:3345/media/image/640f30eb87c25839fab273c0" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f30ed87c25839fab273c2" data-width="720"
+                        data-height="720">
+                        <img src="http://localhost:3345/media/image/640f30ed87c25839fab273c2" alt="korny" class="image">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div onclick="showImageModal(this)" class="content"
+                        data-uri="http://localhost:3345/media/image/640f303f87c25839fab2733c" data-width="720"
+                        data-height="540">
+                        <img src="http://localhost:3345/media/image/640f303f87c25839fab2733c" alt="korny" class="image">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+
+    <a href="javascript:void(0)" id="scrollToTopCtn">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+    <div id="myModal" class="modal">
+        <div id="modal-content">
+            <div>
+                <span id="closeModal">&times;</span>
+                <img src="" alt="" width="100%" id="imgModal">
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <script>
+        const modal = document.getElementById("myModal");
+        const scrollToTopBtn = $("#scrollToTopCtn");
+        const gallery = document.querySelector('#gallery');
+        function getVal(elem, style) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); };
+        function getHeight(item) { return item.querySelector('.content').getBoundingClientRect().height; };
+        function resizeAll() {
+            const altura = getVal(gallery, 'grid-auto-rows');
+            const gap = getVal(gallery, 'grid-row-gap');
+            gallery.querySelectorAll('.gallery-item').forEach(function (item) {
+                const el = item;
+                el.style.gridRowEnd = "span " + Math.ceil((getHeight(item) + gap) / (altura + gap));
+            });
+        };
+        function showImageModal(ele) {
+            const uri = $(ele).attr('data-uri');
+            const width = parseInt($(ele).attr('data-width'));
+            const height = parseInt($(ele).attr('data-height'));
+            const raito = width / height;
+            if (raito <= 0.7) {
+                $("#modal-content").css('width', '400px');
+            } else if (raito <= 1 && raito > 0.7) {
+                $("#modal-content").css('width', '600px');
+            } else {
+                $("#modal-content").css('width', '850px');
+            }
+            $("#imgModal").attr("src", uri);
+            modal.style.display = "block";
+        }
+
+        $(document).ready(function () {
+            $("#closeModal").click(() => {
+                modal.style.display = "none";
+            });
+            $("#scrollToTopCtn").click(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            gallery.querySelectorAll('img').forEach(function (item) {
+                if (item.complete) {
+                    // console.log(item.src);
+                }
+                else {
+                    item.addEventListener('load', function () {
+                        const altura = getVal(gallery, 'grid-auto-rows');
+                        const gap = getVal(gallery, 'grid-row-gap');
+                        const gitem = item.parentElement.parentElement;
+                        gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
+                    });
+                }
+            });
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            window.onscroll = function () {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    scrollToTopBtn.css("display", "block");
+                } else {
+                    scrollToTopBtn.css("display", "none")
+                }
+            }
+            window.addEventListener('resize', resizeAll);
+        });
+    </script>
 </body>
 
 </html>

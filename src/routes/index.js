@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// const mangaRoute = require("./manga.route");
+const mainRoute = require("./main.route");
 const mediaRoute = require("./media.route");
 const adminRoute = require("./admin.route");
 // const authRoute = require("./auth.route");
@@ -14,7 +14,7 @@ router.use("/api/v1", apiRoute);
 router.use("/media", mediaRoute);
 // router.use("/manga", mangaRoute);
 // router.get("/login", LogintController.loginPage);
-// router.use("/auth", authRoute);
 router.use("/admin", adminRoute);
+router.use("/", mainRoute);
 
 module.exports = router;

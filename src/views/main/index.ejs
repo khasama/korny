@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head', {domain}) %>
+        <script>const domain = "<%- domain %>";</script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-content">
+                Kỏny by khapro
+
+                <a href="javascript:void(0)" id="login">Login</a>
+            </div>
+        </header>
+        <div class="main">
+            <div class="gallery" id="gallery">
+                <% images.forEach(image=> { %>
+                    <div class="gallery-item">
+                        <div onclick="showImageModal(this)" class="content"
+                            data-uri="<%- domain %>media/image/<%- image._id %>" data-width="<%- image.width %>"
+                            data-height="<%- image.height %>">
+                            <img src="<%- domain %>media/image/<%- image._id %>" alt="korny" class="image">
+                        </div>
+                    </div>
+
+                    <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <a href="javascript:void(0)" id="scrollToTopCtn">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+    <div id="myModal" class="modal">
+        <div id="modal-content">
+            <div>
+                <span id="closeModal">&times;</span>
+                <img src="" alt="ảnh hỏny" width="100%" id="imgModal">
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/foot') %>
+
+        <script>home = true;</script>
+
+</body>
+
+</html>
