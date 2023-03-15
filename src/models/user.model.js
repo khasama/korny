@@ -5,16 +5,26 @@ const userSchema = new Schema(
     {
         username: {
             type: String,
+        },
+        email: {
+            type: String,
             required: true,
         },
         password: {
             type: String,
-            required: true,
+            // required: true,
+        },
+        avatar: {
+            type: String,
+            default: '180S9M-mFn0Yg5Ia7vmoAeLWueHQLaZwU'
         },
         role: {
             type: String,
-            required: true,
+            default: 'normal'
         },
+        googleId: {
+            type: String,
+        }
     },
     { timestamps: true }
 );

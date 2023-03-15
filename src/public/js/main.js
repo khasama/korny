@@ -30,6 +30,14 @@ function showImageModal(ele) {
     modal.style.display = "block";
 }
 
+function validateEmail(email) {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
+
 function loadMore() {
     const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
@@ -57,17 +65,12 @@ function loadMore() {
                             `);
                     });
                     gallery.querySelectorAll('img').forEach(function (item) {
-                        if (item.complete) {
-                            // console.log(item.src);
-                        }
-                        else {
-                            item.addEventListener('load', function () {
-                                const altura = getVal(gallery, 'grid-auto-rows');
-                                const gap = getVal(gallery, 'grid-row-gap');
-                                const gitem = item.parentElement.parentElement;
-                                gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
-                            });
-                        }
+                        item.addEventListener('load', function () {
+                            const altura = getVal(gallery, 'grid-auto-rows');
+                            const gap = getVal(gallery, 'grid-row-gap');
+                            const gitem = item.parentElement.parentElement;
+                            gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
+                        });
                     });
                 } else {
                     // $(".load-more").html(
@@ -83,6 +86,53 @@ function loadMore() {
 }
 
 $(document).ready(function () {
+
+    $("#register").click(() => {
+        const email = $("#emailRegister").val();
+        const password = $("#passwordRegister").val();
+        if (email && password && validateEmail(email)) {
+            $.ajax({
+                type: "POST",
+                url: `${domain}auth/register`,
+                data: {
+                    email,
+                    password
+                },
+                success: (result) => {
+                    if (result.status == "success") {
+                        alert("success");
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        } else {
+            alert("vui long kiem tra lai");
+        }
+    });
+    $("#login").click(() => {
+        const email = $("#email").val();
+        const password = $("#password").val();
+        if (email && password && validateEmail(email)) {
+            $.ajax({
+                type: "POST",
+                url: `${domain}auth/login`,
+                data: {
+                    email,
+                    password
+                },
+                success: (result) => {
+                    if (result.status == "success") {
+                        window.location = '/';
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        } else {
+            alert("vui long kiem tra lai");
+        }
+    });
     $("#closeModal").click(() => {
         modal.style.display = "none";
     });

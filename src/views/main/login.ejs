@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script>const domain = "<%- domain  %>";</script>
+</head>
+
+<body>
+    <h3>Login</h3>
+    <label for="email">Email:</label>
+    <input type="email" id="email"> <br> <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password"> <br> <br>
+    <button id="login">Login</button>
+    <a href="/auth/google">google login</a>
+
+    <hr>
+
+    <h3>Register</h3>
+    <label for="email">Email:</label>
+    <input type="email" id="emailRegister"> <br> <br>
+    <label for="password">Password:</label>
+    <input type="password" id="passwordRegister"> <br> <br>
+    <button id="register">Register</button>
+
+    <%- include('partials/foot') %>
+
+        <script>
+
+        </script>
+</body>
+
+</html>

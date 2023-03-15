@@ -1,10 +1,12 @@
 require("dotenv").config();
+require("./src/configs/oauth.config");
 const express = require("express");
 const app = express();
 const createError = require("http-errors");
 const cors = require("cors");
 const session = require("express-session");
 // const compression = require("compression");
+const passport = require("passport");
 const connect = require("./src/configs/mongo");
 // const fileUpload = require("express-fileupload");
 // const Redis = require("ioredis");
@@ -26,6 +28,7 @@ app.use(
         credentials: true,
     })
 );
+
 app.use(
     session({
         // store: new RedisStore({ client: clientRedis }),
@@ -43,6 +46,8 @@ app.set("views", "./src/views");
 
 // app.use(compression());
 app.use(require("./src/routes"));
+app.use(passport.initialize());
+app.use(passport.session());
 
 connect();
 
