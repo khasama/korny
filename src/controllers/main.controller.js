@@ -6,8 +6,8 @@ const MainController = {};
 
 MainController.home = async (req, res, next) => {
     try {
-        const images = await ImageModel.find({ deleted: false }).sort({ 'createdAt': 'desc' }).limit(20);
-        const user = req.user || req.session.user || req.session.passport.user;
+        const images = await ImageModel.find({ deleted: false }).sort({ 'createdAt': 'desc' }).limit(50);
+        const user = req.user || req.session.user || req.session.passport?.user;
         return res.render("main", { images, domain: global.domain, user });
     } catch (error) {
         // logger.error(error.stack || error);

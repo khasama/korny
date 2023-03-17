@@ -5,29 +5,16 @@ const path = require('path');
 
 module.exports = {
     verifyAdmin: (req, res, next) => {
-        const token = req.session.access_token;
-        if (!token) {
+        const user = req.user || req.session.user || req.session.passport?.user;
+        if (!user) {
             return res.redirect("/login");
         }
 
-        jwt.verify(
-            token,
-            process.env.ACCESS_TOKEN_SECRET,
-            (err, payload) => {
-                if (!err) {
-                    const role = payload.role;
-                    if (role === "admin") {
-                        next();
-                    } else {
-                        res.redirect("/login");
-                    }
-
-                } else {
-                    req.session.access_token = undefined;
-                    return res.redirect("/login");
-                }
-            }
-        );
+        if (user.role === "admin") {
+            next();
+        } else {
+            return res.redirect("/");
+        }
     },
     checkRefererEmbed: (req, res, next) => {
         const regex = new RegExp('^(?:https?:\\/\\/)?(?:[^@\\/\\n]+@)?(?:www\\.)?([^:\\/\\n]+)', 'igm');

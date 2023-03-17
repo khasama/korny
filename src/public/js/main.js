@@ -2,7 +2,7 @@ const modal = document.getElementById("myModal");
 const scrollToTopBtn = $("#scrollToTopCtn");
 const gallery = document.querySelector('#gallery');
 let nextPage = 2;
-const limit = 20;
+const limit = 50;
 let home = false;
 function getVal(elem, style) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); };
 function getHeight(item) { return item.querySelector('.content').getBoundingClientRect().height; };

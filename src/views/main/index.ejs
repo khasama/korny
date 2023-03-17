@@ -11,7 +11,11 @@
             <div class="header-content">
                 Kỏny by khapro
 
-                <a href="/login">Login</a>
+                <% if(user){ %>
+                    <a href="/logout">Logout</a>
+                    <% } else { %>
+                        <a href="/login">Login</a>
+                        <% } %>
             </div>
         </header>
         <div class="main">
