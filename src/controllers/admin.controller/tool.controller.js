@@ -23,7 +23,9 @@ ToolController.fanpagePage = async (req, res, next) => {
 ToolController.getImagesOfFanpage = async (req, res, next) => {
     try {
         const _id = req.body.id;
-        const fanpage = await FanpageModel.findById({ _id })
+        let limit = req.body.limit;
+        if (!limit || limit <= 0) limit = 1000;
+        const fanpage = await FanpageModel.findById({ _id });
         const imageLatest = await ImageModel.findOne({ fanpage: _id, status: "latest" }).sort({ 'createdAt': 'desc' });
         let getError = 0, getSuccess = 0;
         let next = `https://graph.facebook.com/${fanpage.fanpageId}/photos/?access_token=${accessToken}&type=uploaded&limit=50`, arrImage = [], rs;
@@ -38,9 +40,9 @@ ToolController.getImagesOfFanpage = async (req, res, next) => {
                 arrImage.push(ele);
             });
             console.log(arrImage.length);
-            if (arrImage.length >= 1000) next = false;
+            if (arrImage.length >= limit) next = false;
         }
-        for (const image of arrImage) {
+        for (const image of arrImage.reverse()) {
             const rs = await fetch(image.source, { method: "GET", });
             const source = [];
             if (rs.status == 200) {
@@ -76,8 +78,7 @@ ToolController.getImagesOfFanpage = async (req, res, next) => {
                 console.log(`error: ${getError}`);
             }
         }
-        if (arrImage.length > 0) await ImageModel.findOneAndUpdate({ postId: arrImage[0].postId }, { status: 'latest' });
-        // await FanpageModel.findOneAndUpdate({ _id }, { numberImages: parseInt(fanpage.numberImages + getSuccess) });
+        if (arrImage.length > 0) await ImageModel.findOneAndUpdate({ postId: arrImage[arrImage.length - 1].postId }, { status: 'latest' });
         return res.status(200).json({ status: "success", message: `get thành công ${getSuccess} ảnh, ${getError} ảnh lỗi` });
     } catch (error) {
         // next(createError[500]);

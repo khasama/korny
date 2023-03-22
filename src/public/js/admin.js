@@ -36,12 +36,14 @@ $(document).ready(function () {
     $("#btnGetImgOfFanpage").click(() => {
         $("#btnGetImgOfFanpage").prop('disabled', true);
         const id = $("#idFanpage").val();
+        const limit = $("#limit").val();
         if (id) {
             $.ajax({
                 type: "POST",
                 url: `${base}/tool/fanpage`,
                 data: {
                     id,
+                    limit
                 },
                 success: (result) => {
                     if (result.status == 'success') {
