@@ -50,10 +50,10 @@ FanpageController.addFanpage = async (req, res, next) => {
     }
 };
 
-FanpageController.deleteFanpage = async (req, res, next) => {
+FanpageController.softDeleteFanpage = async (req, res, next) => {
     try {
-        // const _id = mongoose.Types.ObjectId(req.params.id);
-        // await FanpageModel.findOneAndDelete({ _id });
+        const _id = mongoose.Types.ObjectId(req.params.id);
+        await FanpageModel.deleteById({ _id });
         return res.status(200).json({ status: "success" });
     } catch (error) {
         // console.log(error);
