@@ -14,7 +14,7 @@ const ToolController = {};
 
 ToolController.fanpagePage = async (req, res, next) => {
     try {
-        const fanpages = await FanpageModel.find();
+        const fanpages = await FanpageModel.find({ deleted: false });
         return res.render("admin/pages/tools/fanpage", { domain: global.domain, fanpages });
     } catch (error) {
         // logger.error(error.stack || error);

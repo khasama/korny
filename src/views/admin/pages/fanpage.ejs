@@ -41,6 +41,7 @@
                                                     <th>Fanpage ID</th>
                                                     <th>Name</th>
                                                     <th>Images number</th>
+                                                    <th>Deleted</th>
                                                     <th style="width: 25%;">
                                                         <a href="javascript:void(0)" data-toggle="modal"
                                                             data-target="#newFanpageModal">
@@ -60,6 +61,9 @@
                                                         </td>
                                                         <td>
                                                             <%- fanpage.numberImages %>
+                                                        </td>
+                                                        <td>
+                                                            <%- fanpage.deleted ? 'True' : 'False' %>
                                                         </td>
                                                         <td>
                                                             <a href="javascript:void(0)" class="btn btn-primary"

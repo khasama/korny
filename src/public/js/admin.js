@@ -65,34 +65,14 @@ $(document).ready(function () {
     });
 });
 
-function getInforMovie(ele) {
-    const id = $(ele).attr("data-id");
-    $.ajax({
-        url: `${base}/movie/${id}`,
-        success: (result) => {
-            if (result.status == "success") {
-                const movie = result.data;
-                $("#idMovie").val(movie._id);
-                $("#updateName").val(movie.name);
-                $("#updateSlug").val(movie.slug);
-                $("#updateAka").val(movie.aka);
-                $("#current-thumb").attr("src", `https://drive.google.com/uc?id=${movie.thumb}`);
-                $("#current-background").attr("src", `https://drive.google.com/uc?id=${movie.background}`);
-                $("#updateMovieModal").modal("show");
-                $("#updateStatus").val(movie.status);
-            } else {
-                alert(result.message);
-            }
-        }
-    });
-}
+
 
 function deleteFanpage(ele) {
     const id = $(ele).attr("data-id");
     if (confirm("Are you sure about that ???")) {
         $.ajax({
             type: "DELETE",
-            url: `${base}/fanpage/${id}`,
+            url: `${base}/fanpage/sd/${id}`,
             success: (result) => {
                 if (result.status == "success") {
                     alert(result.status);
