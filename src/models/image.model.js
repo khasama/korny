@@ -24,6 +24,10 @@ const imageSchema = new Schema(
             type: String,
             ref: "fanpages",
         },
+        instagram: {
+            type: String,
+            ref: "instagrams",
+        },
         status: {
             type: String
         }

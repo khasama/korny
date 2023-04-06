@@ -25,5 +25,15 @@ MainController.loginPage = async (req, res, next) => {
     }
 };
 
+MainController.fanpage = async (req, res, next) => {
+    try {
+        const images = await ImageModel.find({ deleted: false, pincode: { $ne: null } }).sort({ 'createdAt': 'desc' }).limit(50);
+        const user = req.user || req.session.user || req.session.passport?.user;
+        return res.render("main/fanpage", { images, domain: global.domain, user });
+    } catch (error) {
+        // logger.error(error.stack || error);
+        return res.status(500);
+    }
+};
 
 module.exports = MainController;
