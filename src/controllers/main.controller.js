@@ -31,7 +31,6 @@ MainController.fanpage = async (req, res, next) => {
         const user = req.user || req.session.user || req.session.passport?.user;
         return res.render("main/fanpage", { images, domain: global.domain, user });
     } catch (error) {
-        // logger.error(error.stack || error);
         return res.status(500);
     }
 };
