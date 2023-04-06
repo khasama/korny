@@ -20,8 +20,7 @@ MainController.loginPage = async (req, res, next) => {
 
         return res.render("main/login", { domain: global.domain });
     } catch (error) {
-        // logger.error(error.stack || error);
-        // return res.status(500);
+
     }
 };
 
