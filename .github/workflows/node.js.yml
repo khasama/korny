@@ -32,7 +32,7 @@ jobs:
             - run: echo REDIRECT_URI=${{ secrets.REDIRECT_URI }} >> .env
             - run: echo REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} >> .env
             - run: echo FOLDER_IMAGE=${{ secrets.FOLDER_IMAGE }} >> .env
+            - run: echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
             - run: echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
-            - run: echo PORT=${{ secrets.PORT }} >> .env
             - run: npm i
             - run: pm2 restart korny
