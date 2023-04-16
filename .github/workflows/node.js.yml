@@ -24,5 +24,15 @@ jobs:
                   cache: "npm"
             - run: touch .env
             - run: echo PORT=${{ secrets.PORT }} >> .env
+            - run: echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+            - run: echo SESION_SECRET=${{ secrets.SESION_SECRET }} >> .env
+            - run: echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+            - run: echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+            - run: echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
+            - run: echo REDIRECT_URI=${{ secrets.REDIRECT_URI }} >> .env
+            - run: echo REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} >> .env
+            - run: echo FOLDER_IMAGE=${{ secrets.FOLDER_IMAGE }} >> .env
+            - run: echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
+            - run: echo PORT=${{ secrets.PORT }} >> .env
             - run: npm i
             - run: pm2 restart korny
