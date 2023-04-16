@@ -8,6 +8,29 @@ on:
         branches: ["main"]
 
 jobs:
+	create-envfile:
+	
+		runs-on: self-hosted
+	
+		steps:
+		- name: Make envfile
+		uses: SpicyPizza/create-envfile@v1.3
+		with:
+			envkey_DEBUG: false
+			envkey_PORT: ${{ secrets.PORT }}
+			envkey_NODE_ENV: ${{ secrets.NODE_ENV }}
+			envkey_SESION_SECRET: ${{ secrets.SESION_SECRET }}
+			envkey_MONGO_URI: ${{ secrets.MONGO_URI }}
+			envkey_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+			envkey_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+			envkey_REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+			envkey_REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+			envkey_FOLDER_IMAGE: ${{ secrets.FOLDER_IMAGE }}
+			envkey_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+			envkey_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+			directory: /
+			file_name: .env
+			fail_on_empty: false
     build:
         runs-on: self-hosted
 
@@ -16,20 +39,6 @@ jobs:
                 node-version: [16.x]
 
         steps:
-			- name: 'Create env file'
-			- run: |
-				touch .env
-				echo PORT=${{ secrets.PORT }} >> .env
-				echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
-				echo SESION_SECRET=${{ secrets.SESION_SECRET }} >> .env
-				echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
-				echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
-				echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
-				echo REDIRECT_URI=${{ secrets.REDIRECT_URI }} >> .env
-				echo REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} >> .env
-				echo FOLDER_IMAGE=${{ secrets.FOLDER_IMAGE }} >> .env
-				echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
-				echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
             - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
