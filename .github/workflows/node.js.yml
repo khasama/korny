@@ -22,5 +22,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
+            - run: touch .env
+            - run: echo PORT=${{ secrets.PORT }} >> .env
             - run: npm i
             - run: pm2 restart korny
