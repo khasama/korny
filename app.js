@@ -9,10 +9,10 @@ const session = require("express-session");
 const passport = require("passport");
 const connect = require("./src/configs/mongo");
 // const fileUpload = require("express-fileupload");
-// const Redis = require("ioredis");
-// const RedisStore = require("connect-redis").default;
+const Redis = require("ioredis");
+const RedisStore = require("connect-redis").default;
 
-// const clientRedis = new Redis();
+const clientRedis = new Redis();
 
 app.disable('x-powered-by');
 // app.use(fileUpload({
@@ -31,7 +31,7 @@ app.use(
 
 app.use(
     session({
-        // store: new RedisStore({ client: clientRedis }),
+        store: new RedisStore({ client: clientRedis }),
         secret: process.env.SESION_SECRET,
         resave: false,
         saveUninitialized: true,

@@ -16,6 +16,20 @@ jobs:
                 node-version: [16.x]
 
         steps:
+			- name: 'Create env file'
+			- run: |
+				touch .env
+				echo PORT=${{ secrets.PORT }} >> .env
+				echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+				echo SESION_SECRET=${{ secrets.SESION_SECRET }} >> .env
+				echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+				echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+				echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
+				echo REDIRECT_URI=${{ secrets.REDIRECT_URI }} >> .env
+				echo REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} >> .env
+				echo FOLDER_IMAGE=${{ secrets.FOLDER_IMAGE }} >> .env
+				echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
+				echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env
             - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
@@ -23,5 +37,4 @@ jobs:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
             - run: npm i
-            - run: pm2 delete korny
-            - run: pm2 start server.js --name korny
+            - run: pm2 restart korny
